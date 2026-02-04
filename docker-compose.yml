@@ -1,8 +1,12 @@
+# Docker Compose - F5 DevOps Assignment
+# Orchestrates nginx server and test container
+
 version: '3.8'
 
 services:
   nginx-server:
     build: ./nginx
+    # Expose both ports to host. Trade-off: also accessible outside Docker network
     ports:
       - "8080:8080"
       - "8081:8081"
@@ -12,12 +16,14 @@ services:
 
   tester:
     build: ./tester
+    # depends_on only waits for container start, not readiness. Assumption: nginx starts fast enough
     depends_on:
       - nginx-server
     networks:
-      - f5-network
+      - f5-network  # Same network allows access via service name "nginx-server"
 
 
 networks:
+  # Bridge network: containers can communicate by service name (DNS resolution)
   f5-network:
     driver: bridge

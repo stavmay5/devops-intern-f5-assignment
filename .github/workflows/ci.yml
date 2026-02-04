@@ -1,5 +1,9 @@
+# GitHub Actions CI Pipeline - F5 DevOps Assignment
+# Builds containers, runs tests, uploads results as artifacts
+
 name: DevOps Intern Assignment CI
 
+# Trigger: runs on push/PR to main. Trade-off: runs on every commit (could add path filters)
 on:
   push:
     branches: [ "main" ]
@@ -8,6 +12,7 @@ on:
 
 jobs:
   build-and-test:
+    # ubuntu-latest includes Docker pre-installed
     runs-on: ubuntu-latest
 
     steps:
@@ -18,25 +23,26 @@ jobs:
 
     - name: Run Docker Compose & Test
       id: run_tests
+      # --exit-code-from tester: use tester's exit code as step result (0=pass, 1=fail)
       run: docker compose up --build --exit-code-from tester
 
-   
+
     - name: Create Success File
-      if: success()
+      if: success()  # Only runs if previous steps succeeded
       run: echo "Tests passed successfully!" > succeeded.txt
 
 
     - name: Create Failure File
-      if: failure()
+      if: failure()  # Only runs if previous steps failed
       run: echo "Tests failed!" > fail.txt
 
 
     - name: Upload Artifacts
-      if: always()
+      if: always()  # Always upload, regardless of test result
       uses: actions/upload-artifact@v4
       with:
         name: test-results
         path: |
           succeeded.txt
           fail.txt
-        if-no-files-found: ignore
+        if-no-files-found: ignore  # Don't fail if file doesn't exist (only one will)
