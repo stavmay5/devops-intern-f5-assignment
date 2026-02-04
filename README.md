@@ -37,3 +37,42 @@ As requested in the advanced requirements, I implemented traffic shaping to prot
 │   └── ci.yml             # CI Pipeline definition
 ├── docker-compose.yml     # Orchestration file
 └── README.md              # Project documentation
+```
+
+## How to Run Locally
+###  1. Clone the repository:
+
+```bash
+git clone [https://github.com/stavmay5/devops-intern-f5-assignment.git](https://github.com/stavmay5/devops-intern-f5-assignment.git)
+cd devops-intern-f5-assignment
+```
+
+### 2. Run with Docker Compose:
+
+```Bash
+docker compose up --build
+```
+
+### 3. Observe Results:
+
+- The logs will show the build process.
+
+- The ```tester``` container will output the results of the connection tests.
+
+- You will see the **Rate Limiting** test passing (showing blocked requests).
+
+- Exit code ```0``` indicates success.
+
+## CI/CD Pipeline
+
+Every push to the ```main``` branch triggers the GitHub Actions workflow:
+
+1. Sets up an Ubuntu runner.
+
+2. Builds the containers.
+
+3. Runs the test suite via Docker Compose.
+
+4. If successful, creates ```succeeded.txt```. If failed, creates ```fail.txt```.
+
+5. Uploads the status file as a downloadable **Artifact**.
