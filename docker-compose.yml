@@ -1,4 +1,3 @@
-# Docker Compose - F5 DevOps Assignment
 # Orchestrates nginx server and test container
 
 version: '3.8'

@@ -1,4 +1,3 @@
-# GitHub Actions CI Pipeline - F5 DevOps Assignment
 # Builds containers, runs tests, uploads results as artifacts
 
 name: DevOps Intern Assignment CI

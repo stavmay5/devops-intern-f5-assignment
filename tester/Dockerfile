@@ -1,5 +1,3 @@
-# Python Test Container Dockerfile
-
 # slim variant: smaller than full image, has what we need. Trade-off: no compiled libs
 FROM python:3.9-slim
 

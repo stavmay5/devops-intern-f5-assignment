@@ -1,5 +1,4 @@
 """
-Test script for F5 DevOps Assignment.
 Tests: HTTP 200 on port 8080, HTTP 500 on port 8081, and rate limiting.
 Exit codes: 0 = all tests passed, 1 = test failed (used by CI)
 """
