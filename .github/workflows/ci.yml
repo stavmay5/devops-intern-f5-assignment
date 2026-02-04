@@ -18,7 +18,7 @@ jobs:
 
     - name: Run Docker Compose & Test
       id: run_tests
-      run: docker-compose up --build --exit-code-from tester
+      run: docker compose up --build --exit-code-from tester
 
    
     - name: Create Success File
