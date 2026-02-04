@@ -1,0 +1,42 @@
+name: DevOps Intern Assignment CI
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+
+    steps:
+
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+
+    - name: Run Docker Compose & Test
+      id: run_tests
+      run: docker-compose up --build --exit-code-from tester
+
+   
+    - name: Create Success File
+      if: success()
+      run: echo "Tests passed successfully!" > succeeded.txt
+
+
+    - name: Create Failure File
+      if: failure()
+      run: echo "Tests failed!" > fail.txt
+
+
+    - name: Upload Artifacts
+      if: always()
+      uses: actions/upload-artifact@v4
+      with:
+        name: test-results
+        path: |
+          succeeded.txt
+          fail.txt
+        if-no-files-found: ignore
