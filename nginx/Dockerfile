@@ -1,8 +1,4 @@
-FROM ubuntu:latest
-
-RUN apt-get update && \
-    apt-get install -y nginx && \
-    rm -rf /var/lib/apt/lists/*
+FROM nginx:alpine
 
 COPY nginx.conf /etc/nginx/nginx.conf
 COPY index.html /var/www/html/index.html
